@@ -1,30 +1,52 @@
-# Backend - Python 後端處理
+# Backend - Python 後端處理（Agent A）
 
-## 📋 目前狀態
+## 目前狀態
 
-本資料夾目前僅包含基礎檔案：
-- `main.py` - 主程式入口（預留）
-- `pyproject.toml` - uv 依賴管理設定
+已實作 FastAPI HTTP API 與核心 NLP 管線：
+- 段落切分（標題 / 空行 / 清單）
+- 摘要與關鍵詞抽取
+- Deterministic hashing embedding + 閾值分群
+- 卡片草稿生成與統計
+- 固定輸出 `frontend/public/deck.json`（UTF-8）
 
-尚未實作完整的功能，請配合本書 CH05 使用 Cloud agent 協同合作
----
+## 啟動方式
 
-## 💡 實作建議
+```bash
+cd backend
+uv sync
+uv run uvicorn api:app --reload --host 127.0.0.1 --port 8000
+```
 
-### 目前按照 agent-a.md 做出來的：
-基礎的文字處理功能：
-- 段落切分（依空行、標題）
-- 文字統計與關鍵詞提取
-- 簡易的分組與摘要邏輯
-- 輸出 JSON 格式
+## API
 
-### 未來擴展：LLM 整合的可能：
-當基礎功能穩定後，可考慮整合大語言模型 API 來提升處理品質：
-- 連接 OpenAI、Claude、Gemini 等 LLM API
-- 使用 Embedding 進行語意分群
-- 智能摘要與重點提取
-- 結構化輸出
+- `GET /health`：健康檢查
+- `POST /api/process`：處理純文字並寫入 deck.json
 
----
+### Request 範例
 
-詳細的技術規範與開發規則請參考專案根目錄的 doc/prd/agent-a.md
+```json
+{
+  "text": "# 標題\n\n這是一段內容。\n\n## 另一段\n\n更多說明。",
+  "topic_threshold": 0.75,
+  "max_topics": 5,
+  "max_bullets": 5,
+  "debug": false
+}
+```
+
+### curl 範例
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/process \
+  -H "Content-Type: application/json" \
+  -d '{"text":"# 目標\n\n把長文變成卡片。\n\n# 流程\n\n切段、摘要、分群、出卡。","debug":true}'
+```
+
+## 檔案結構
+
+- `api.py`：FastAPI app（CORS、`/api/process`）
+- `pipeline.py`：核心處理管線
+- `models.py`：Pydantic Request/Response 與 Deck schema
+- `main.py`：入口說明
+
+詳細規格請參考 `docs/prd/agent-a.md` 與 `docs/spec/technical-spec.md`。
