@@ -54,6 +54,7 @@ const App = () => {
   const [status, setStatus] = useState<StatusMessage | null>(null);
   const [canRetry, setCanRetry] = useState(false);
   const [lastRequestText, setLastRequestText] = useState<string | null>(null);
+  const [debugInfo, setDebugInfo] = useState<Record<string, unknown> | null>(null);
 
   const applyDeck = (nextDeck: Deck) => {
     setDeck(nextDeck);
@@ -249,9 +250,12 @@ const App = () => {
     if (!result.ok) {
       setStatus({ tone: "error", text: result.error });
       setCanRetry(result.canRetry);
+      setDebugInfo(null);
       setIsGenerating(false);
       return;
     }
+
+    setDebugInfo(params.debug && result.debugInfo ? result.debugInfo : null);
 
     if (result.deck) {
       applyDeck(result.deck);
@@ -434,6 +438,13 @@ const App = () => {
           {status ? (
             <div className={`status-banner status-${status.tone}`} role="status">
               {status.text}
+            </div>
+          ) : null}
+
+          {debugInfo ? (
+            <div className="debug-panel" aria-live="polite">
+              <div className="panel-subtitle">除錯資訊</div>
+              <pre className="debug-pre">{JSON.stringify(debugInfo, null, 2)}</pre>
             </div>
           ) : null}
         </section>

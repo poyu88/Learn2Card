@@ -24,6 +24,7 @@ export interface ProcessSuccessResponse {
   stats?: Deck["stats"];
   deck?: Deck;
   cardCount?: number;
+  debug_info?: Record<string, unknown> | null;
 }
 
 export type LoadDeckResult =
@@ -31,7 +32,7 @@ export type LoadDeckResult =
   | { ok: false; error: string };
 
 export type ProcessResult =
-  | { ok: true; message: string; deck?: Deck }
+  | { ok: true; message: string; deck?: Deck; debugInfo?: Record<string, unknown> }
   | { ok: false; error: string; canRetry: boolean };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -222,7 +223,12 @@ export async function processText(params: ProcessParams): Promise<ProcessResult>
         ? `已成功產生 ${cardCount} 張卡片`
         : "已成功產生卡片");
 
-    return { ok: true, message, deck };
+    const debugInfo =
+      isRecord(payload) && isRecord(payload.debug_info)
+        ? (payload.debug_info as Record<string, unknown>)
+        : undefined;
+
+    return { ok: true, message, deck, debugInfo };
   } catch (error) {
     if (error instanceof DOMException && error.name === "AbortError") {
       return {
