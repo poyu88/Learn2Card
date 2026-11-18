@@ -135,9 +135,16 @@ export async function loadDeckFromPublic(): Promise<LoadDeckResult> {
 
 function extractErrorMessage(payload: unknown, fallback: string): string {
   if (!isRecord(payload)) return fallback;
-  if (typeof payload.detail === "string") return payload.detail;
-  if (typeof payload.message === "string") return payload.message;
-  if (typeof payload.error === "string") return payload.error;
+  // Prefer user-facing `message` over raw `detail` (Backend 500 puts exception text in detail).
+  if (typeof payload.message === "string" && payload.message.trim()) {
+    return payload.message;
+  }
+  if (typeof payload.error === "string" && payload.error.trim()) {
+    return payload.error;
+  }
+  if (typeof payload.detail === "string" && payload.detail.trim()) {
+    return payload.detail;
+  }
   if (Array.isArray(payload.detail)) {
     const parts = payload.detail
       .map((item) => {
