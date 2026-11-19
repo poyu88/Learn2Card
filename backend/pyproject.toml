@@ -1,7 +1,12 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Learn2Cards backend NLP pipeline (FastAPI)"
 readme = "README.md"
 requires-python = ">=3.11.8"
-dependencies = []
+dependencies = [
+    "fastapi>=0.163.2",
+    "numpy>=2.4.6",
+    "pydantic>=2.14.3",
+    "uvicorn>=0.54.0",
+]

@@ -22,6 +22,240 @@
     box-shadow: 0 12px 40px rgba(15, 23, 42, 0.35);
 }
 
+.input-panel {
+    margin-top: 22px;
+}
+
+.panel-subtitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+}
+
+.input-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-group-wide {
+    min-width: 0;
+}
+
+.field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.field-hint {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.45;
+}
+
+.text-input {
+    width: 100%;
+    resize: vertical;
+    min-height: 160px;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #0f172a;
+    line-height: 1.55;
+}
+
+.text-input:focus,
+.params-grid input[type="number"]:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 1px;
+    border-color: #60a5fa;
+}
+
+.params-block {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.params-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px 16px;
+}
+
+.params-grid input[type="number"],
+.params-grid input[type="range"] {
+    width: 100%;
+}
+
+.params-grid input[type="number"] {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.checkbox-group {
+    justify-content: center;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.param-warning {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #9a3412;
+    font-size: 13px;
+}
+
+.action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.primary-button {
+    border: 1px solid #1d4ed8;
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    color: #ffffff;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+}
+
+.primary-button:hover:enabled {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #1d4ed8, #0284c7);
+}
+
+.secondary-button {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.secondary-button:hover:enabled {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.loading-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    color: #1e40af;
+    font-weight: 600;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #bfdbfe;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.status-banner {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.debug-panel {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #0f172a;
+    color: #e2e8f0;
+    border: 1px solid #1e293b;
+}
+
+.debug-panel .panel-subtitle {
+    color: #93c5fd;
+    margin-bottom: 8px;
+}
+
+.debug-pre {
+    margin: 0;
+    max-height: 240px;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.status-info {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+    color: #1e3a8a;
+}
+
+.status-success {
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+}
+
+.status-error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 .app-title {
     font-size: 20px;
     font-weight: 800;
